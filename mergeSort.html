@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+<head>
+    <meta charset="UTF-8">
+    <title>Merge Sort</title>
+    <style>
+        body {
+            background-color: gray
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Merge Sort</h1>
+    <button onclick="merge()">click</button>
+
+    <script>
+        function merge() {
+            let data = [3, 8, 2, -5, 0, 5, 10, 9];
+            mergeSort(data);
+            console.log(data);
+        }
+
+        function mergeSort(arr) {
+            let parts = arr.map((value, index) => {
+                return {
+                    start: index,
+                    end: index
+                }
+            });
+            
+            while (parts.length > 1) {
+                let nextParts = [];
+                for (let i = 0; i < parts.length; i += 2) {
+                    if (parts[i + 1]) {
+                        const leftPart = parts[i];
+                        const rightPart = parts[i + 1];
+                        const leftArr = arr.slice(leftPart.start, leftPart.end + 1);
+                        const rightArr = arr.slice(rightPart.start, rightPart.end + 1);
+
+                        let leftIndex = 0;
+                        let rightIndex = 0;
+                        let arrIndex = leftPart.start;
+
+                        while (leftIndex < leftArr.length && rightIndex < rightArr.length) {
+                            if (leftArr[leftIndex] < rightArr[rightIndex]) {
+                                arr[arrIndex] = leftArr[leftIndex];
+                                leftIndex++;
+                            } else {
+                                arr[arrIndex] = rightArr[rightIndex];
+                                rightIndex++;
+                            }
+                            arrIndex++;
+
+                        }
+
+                        while (leftIndex < leftArr.length) {
+                            arr[arrIndex] = leftArr[leftIndex];
+                            arrIndex++;
+                            leftIndex++;
+                        }
+
+                        while (rightIndex < rightArr.length) {
+                            arr[arrIndex] = rightArr[rightIndex];
+                            arrIndex++;
+                            rightIndex++;
+                        }
+
+                        nextParts.push({
+                            start: leftPart.start,
+                            end: rightPart.end
+                        });
+
+                    } else {
+                        nextParts.push(parts[i]);
+                    }
+                }
+                parts = nextParts;
+            }
+
+        }
+    </script>
+
+</body></html>
