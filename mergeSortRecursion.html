@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-tw">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Merge Sort</title>
+    <style>
+        body {
+            background-color: gray
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1>Merge Sort</h1>
+    <button onclick="merge()">click</button>
+
+    <script>
+        //recursion
+        function merge() {
+//            let data = [3, 8, 2, -5, 0, 5, 10, 9];
+            let data = [];
+            for(let i=0;i<100;i++){
+                data.push(Math.floor(Math.random()*1000));
+            }
+            console.log(data);
+            console.time();
+            mergeSort(data, 0, data.length - 1);
+            console.timeEnd();
+            console.log(data);
+        }
+
+        function mergeSort(arr, startIndex, endIndex) {
+            if (startIndex < endIndex) {
+                const midIndex = Math.floor((startIndex + endIndex) / 2);
+                mergeSort(arr, startIndex, midIndex);
+                mergeSort(arr, midIndex + 1, endIndex);
+
+                const leftArr = arr.slice(startIndex, midIndex + 1);
+                const rightArr = arr.slice(midIndex + 1, endIndex + 1);
+                let leftIndex = 0;
+                let rightIndex = 0;
+                let arrIndex = startIndex;
+
+                while (leftIndex < leftArr.length && rightIndex < rightArr.length) {
+                    if (leftArr[leftIndex] < rightArr[rightIndex]) {
+                        arr[arrIndex] = leftArr[leftIndex];
+                        leftIndex++;
+                    } else {
+                        arr[arrIndex] = rightArr[rightIndex];
+                        rightIndex++;
+                    }
+                    arrIndex++;
+
+                }
+
+                while (leftIndex < leftArr.length) {
+                    arr[arrIndex] = leftArr[leftIndex];
+                    arrIndex++;
+                    leftIndex++;
+                }
+
+                while (rightIndex < rightArr.length) {
+                    arr[arrIndex] = rightArr[rightIndex];
+                    arrIndex++;
+                    rightIndex++;
+                }
+            }
+        }
+
+    </script>
+
+</body>
+
+</html>
